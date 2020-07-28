@@ -72,7 +72,15 @@ public class RunLambdaToSQG{
     try {
       InputStream fileInputStream = SentenceUtils.getInputStream(inputFileVal);
       BufferedReader br = new BufferedReader(new InputStreamReader(fileInputStream, "UTF-8"));
+//      BufferedReader br = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
       String line = br.readLine();
+//      while (line != null) {
+//        if (line.trim().equals("") || line.charAt(0) == '#') {
+//          line = br.readLine();
+//          continue;
+//        }
+//      }
+
       List<List<LexicalGraph>> allGraphs = sqg.processText(line);
 
       for (List<LexicalGraph> graphs : allGraphs) {
@@ -83,7 +91,6 @@ public class RunLambdaToSQG{
           }
         }
       }
-
       System.out.println("abinitio");
     }catch (IOException e){
       e.printStackTrace();

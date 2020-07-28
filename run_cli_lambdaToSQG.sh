@@ -51,4 +51,5 @@ java -Dfile.encoding="UTF-8" -cp ".:${THE_CLASSPATH}" deplambda.others.NlpPipeli
     deplambda.lambdaAssignmentRulesFile lib_data/ud-substitution-rules.proto \
     deplambda.lexicalizePredicates true \
     deplambda.debugToFile debug.txt \
-    nthreads 1 
+    nthreads 1 \
+    | java -Dfile.encoding="UTF-8" -cp ".:${THE_CLASSPATH}" deplambda.cli.RunLambdaToSQG
