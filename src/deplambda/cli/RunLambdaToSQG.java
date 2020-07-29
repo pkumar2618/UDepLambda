@@ -51,7 +51,7 @@ public class RunLambdaToSQG{
       logger.debug("Input Sentence: " + jsonSentence.get("sentence").getAsString());
       String sentence = jsonSentence.get("sentence").getAsString();
 //    List<String> processedText = nlpPipeline.processText(sentence);
-      List<LexicalGraph> graphs = graphCreator.buildUngroundedGraph(jsonSentence, SentenceKeys.DEPENDENCY_QUESTION_GRAPH,
+      List<LexicalGraph> graphs = graphCreator.buildUngroundedGraph(jsonSentence, SentenceKeys.DEPENDENCY_LAMBDA,
                     nbestParses, logger);
       allGraphs.add(graphs);
     }
@@ -91,7 +91,7 @@ public class RunLambdaToSQG{
           }
         }
       }
-      System.out.println("abinitio");
+//      System.out.println("abinitio");
     }catch (IOException e){
       e.printStackTrace();
     }
