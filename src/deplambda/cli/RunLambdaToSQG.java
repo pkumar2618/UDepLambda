@@ -60,40 +60,46 @@ public class RunLambdaToSQG{
 
   public static void main(String[] args)
           throws IOException, InterruptedException {
-    PatternLayout layout = new PatternLayout("%r [%t] %-5p: %m%n");
-    Logger logger = Logger.getLogger(CcgParseToUngroundedGraphs.class);
-    logger.setLevel(Level.DEBUG);
-    logger.setAdditivity(false);
-    Appender stdoutAppender = new ConsoleAppender(layout);
-    logger.addAppender(stdoutAppender);
+//    String inputFileVal = "./dep_parse.txt";
+//    InputStream fileInputStream = SentenceUtils.getInputStream(inputFileVal);
+//    BufferedReader br = new BufferedReader(new InputStreamReader(fileInputStream, "UTF-8"));
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
 
-    String inputFileVal = "./dep_parse.txt";
-    RunLambdaToSQG sqg = new RunLambdaToSQG();
     try {
-      InputStream fileInputStream = SentenceUtils.getInputStream(inputFileVal);
-      BufferedReader br = new BufferedReader(new InputStreamReader(fileInputStream, "UTF-8"));
-//      BufferedReader br = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
+
+      PatternLayout layout = new PatternLayout("%r [%t] %-5p: %m%n");
+      Logger logger = Logger.getLogger(CcgParseToUngroundedGraphs.class);
+      logger.setLevel(Level.DEBUG);
+      logger.setAdditivity(false);
+      Appender stdoutAppender = new ConsoleAppender(layout);
+      logger.addAppender(stdoutAppender);
+
+//            Prepare the SQG parser
+      RunLambdaToSQG sqg = new RunLambdaToSQG();
       String line = br.readLine();
-//      while (line != null) {
-//        if (line.trim().equals("") || line.charAt(0) == '#') {
-//          line = br.readLine();
-//          continue;
-//        }
-//      }
+      while (line != null) {
+        if (line.trim().equals("") || line.charAt(0) == '#') {
+          line = br.readLine();
+          continue;
+        }
 
-      List<List<LexicalGraph>> allGraphs = sqg.processText(line);
-
-      for (List<LexicalGraph> graphs : allGraphs) {
-        logger.debug("# Ungrounded Graphs");
-        if (graphs.size() > 0) {
-          for (LexicalGraph ungroundedGraph : graphs) {
-            logger.debug(ungroundedGraph);
+        List<List<LexicalGraph>> allGraphs = sqg.processText(line);
+        for (List<LexicalGraph> graphs : allGraphs) {
+          logger.debug("# Ungrounded Graphs");
+          if (graphs.size() > 0) {
+            for (LexicalGraph ungroundedGraph : graphs) {
+              logger.debug(ungroundedGraph);
+            }
           }
         }
+
+        line = br.readLine();
       }
 //      System.out.println("abinitio");
     }catch (IOException e){
       e.printStackTrace();
+    }finally {
+      br.close();
     }
   }
 }
