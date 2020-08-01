@@ -64,17 +64,16 @@ public class RunLambdaToSQG{
 //    InputStream fileInputStream = SentenceUtils.getInputStream(inputFileVal);
 //    BufferedReader br = new BufferedReader(new InputStreamReader(fileInputStream, "UTF-8"));
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
-
+    FileWriter ug_graph_file = new FileWriter("ug_graph.txt");
     try {
+//      PatternLayout layout = new PatternLayout("%r [%t] %-5p: %m%n");
+//      Logger logger = Logger.getLogger(CcgParseToUngroundedGraphs.class);
+//      logger.setLevel(Level.DEBUG);
+//      logger.setAdditivity(false);
+//      Appender stdoutAppender = new ConsoleAppender(layout);
+//      logger.addAppender(stdoutAppender);
 
-      PatternLayout layout = new PatternLayout("%r [%t] %-5p: %m%n");
-      Logger logger = Logger.getLogger(CcgParseToUngroundedGraphs.class);
-      logger.setLevel(Level.DEBUG);
-      logger.setAdditivity(false);
-      Appender stdoutAppender = new ConsoleAppender(layout);
-      logger.addAppender(stdoutAppender);
-
-//            Prepare the SQG parser
+//    Prepare the SQG parser
       RunLambdaToSQG sqg = new RunLambdaToSQG();
       String line = br.readLine();
       while (line != null) {
@@ -85,16 +84,18 @@ public class RunLambdaToSQG{
 
         List<List<LexicalGraph>> allGraphs = sqg.processText(line);
         for (List<LexicalGraph> graphs : allGraphs) {
-          logger.debug("# Ungrounded Graphs");
+//          logger.debug("# Ungrounded Graphs");
           if (graphs.size() > 0) {
+            ug_graph_file.write("UG Graphs: " + graphs.size() + "\n");
             for (LexicalGraph ungroundedGraph : graphs) {
-              logger.debug(ungroundedGraph);
+//              logger.debug(ungroundedGraph);
+              ug_graph_file.write(ungroundedGraph.toString());
             }
           }
         }
-
         line = br.readLine();
       }
+      ug_graph_file.close();
 //      System.out.println("abinitio");
     }catch (IOException e){
       e.printStackTrace();
